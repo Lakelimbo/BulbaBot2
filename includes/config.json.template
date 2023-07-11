@@ -1,0 +1,43 @@
+{
+  "adminID": "", # The ID of the bot's admin. This account will have full access to all of the bot's functions
+  "clientID": "", # The ID of the user that your bot logs into
+  "updateAvatar": "", # The URL of an avatar to use for your bot. Only set that if you want to update it.
+  "guildID": "", # The bot will not be able to work via DMs if this is not set.
+  "token": "", # Always keep your token a secret! Do not commit this to a public repository!
+  "database": "", # The name of your database for moderation features.
+  "dbhost": "", # Probably localhost, unless you have a remote database.
+  "dbuser": "", # Do NOT use root! Create a user for the bot to use!
+  "dbpass": "", # This will work with a blank password, but you are STRONGLY encouraged to create a unique password.
+  "archiveID": "", # This is the category ID of your #Archives category
+  "logChannel": "", # This is the channel ID your bot uses for general logs
+  "reportChannel": "", # When your bot receives a report, it will place it in this channel ID.
+  "modID": "", # The role ID of your moderator group. This group will be allowed to use the moderation tools.
+  "muteID": "", # This is the role ID of your "muted" group.
+  "ignores": { # A list of commands for ?ignore, along with what role ID should be assigned. Requires you to manually configure the role permissions.
+    "command": "roleID" # `/ignore command` will add roleID to the user.
+  },
+  "messageColors": { #Customize these to your liking! Do not leave any blank or the bot will crash when attempting to use one.
+    "startup": "#7d7c7a",
+    "memJoin": "#4e782b",
+    "memLeave": "#c2595a",
+    "memWarn": "#7c7c7c",
+    "memMute": "#ecd6ad",
+    "memUnmute": "#2ec46e",
+    "memKick": "#f60202",
+    "memBan": "#7b0202",
+    "memUnban": "#027b02",
+    "memLogs": "#03fcd3",
+    "commandHelp": "#ffcd42",
+    "warnClear": "#11f20a",
+    "messageEdit": "#618fe1",
+    "messageDelete": "#f69f02",
+    "chanStash": "#0a1df2",
+    "chanPop": "#f20ab4",
+    "misuseWarn": "#fcba03",
+    "error": "#ff0019",
+    "confirm": "#0af2bc",
+    "ignore": "#cc2b43",
+    "success": "#1cba00",
+    "whois": "#ffffff"
+  }
+}
