@@ -35,6 +35,8 @@ module.exports = {
                 flags.splice(flags.indexOf("n"), 1);
                 const accountAge = message.author.createdAt;
                 const serverTime = message.member.joinedAt;
+                if (!typeof(options.filter) !== "function")
+                    return;
                 let minimumAccountAge = options.filter(option => option.startsWith("minimumaccountage"));
                 if (minimumAccountAge.length) {
                     const time = minimumAccountAge[0].split(":");
