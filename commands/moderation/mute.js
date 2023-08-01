@@ -10,8 +10,6 @@ const sequelize = new Sequelize(database, dbuser, dbpass, {
     logging: false
 });
 
-const schedule = require('node-schedule');
-
 const ModLogs = require('../../includes/sqlModLogs.js');
 const Mutes = require('../../includes/sqlMutes.js');
 const {SlashCommandBuilder, EmbedBuilder} = require("discord.js");
@@ -76,11 +74,12 @@ module.exports = {
             console.log(err);
             return interaction.reply({content: "There was an error while attempting the mute. Please inform the bot's administrator."});
         });
-        const time = new Date(Date.now() + duration);
-        const job = schedule.scheduleJob({start: time}, () => {
+
+        // Stage the unmute
+        setTimeout(() => {
             interaction.client.emit("unmute", interaction.client, user.id, false);
-            schedule.cancelJob(job);
-        });
+        }, duration);
+
 
         return sequelize.transaction(() => {
             return ModLogs.create({

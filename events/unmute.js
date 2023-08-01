@@ -1,11 +1,10 @@
 /**
- * Tells the bot to unmute a user. Works alongside task scheduler,
- * and is invoked upon discovering any stalled unmutes on restart.
+ * Tells the bot to unmute a user. Handles scheduled unmutes,
+ * and is also invoked upon discovering any stalled unmutes on restart.
  */
 const {muteID, guildID, logChannel, messageColors} = require("../config.json");
 const {Events, EmbedBuilder} = require("discord.js");
 const Mutes = require('../includes/sqlMutes.js');
-const schedule = require("node-schedule");
 
 Events.Unmute = "unmute";
 
@@ -26,6 +25,7 @@ module.exports = {
                 const timeToUnmute = new Date(mute.getDataValue("unmutedTime")).getTime();
                 const now = new Date().getTime();
                 const duration = timeToUnmute - now;
+
                 if (duration <= 0) {
                     member.roles.remove(muteID).catch(err => {
                         console.log(err);
@@ -43,12 +43,11 @@ module.exports = {
                             + "Unmute scheduled at " + mute.getDataValue("unmutedTime") + ".",
                         inline: true
                     });
-                    const time = new Date(timeToUnmute);
                     console.log(timeToUnmute);
-                    const job = await schedule.scheduleJob({start: time}, () => {
+                    setTimeout(() => {
                         client.emit("unmute", client, member.user.id, false);
-                        schedule.cancelJob(job);
-                    });
+                    }, duration);
+
                 }
             }
             if (unmutes.length) {
