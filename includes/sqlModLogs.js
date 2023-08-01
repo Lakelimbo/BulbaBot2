@@ -26,7 +26,7 @@ ModLogs.init({
     loggerID: {
         type: Sequelize.BIGINT(20),
         allowNull: false
-    },
+    },/* Not functional yet
     loggedNick: {
         type: Sequelize.STRING,
         allowNull: false
@@ -34,7 +34,7 @@ ModLogs.init({
     loggedUsername: {
         type: Sequelize.STRING,
         allowNull: false
-    },
+    },*/
     logName: {
         type: Sequelize.STRING,
         allowNull: false
