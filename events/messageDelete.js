@@ -33,7 +33,7 @@ module.exports = {
             .setTitle(`Message Deleted by ${message.author.username}`)
             .setThumbnail(message.author.displayAvatarURL())
             .setDescription(`Message sent by <@!${message.author.id}> deleted.`)
-            .addFields({name: `Message in ${message.channel.toString()}`, value: `message.content`})
+            .addFields({name: `Message in ${message.channel.toString()}`, value: message.content})
             .setFooter({text: `ID: ${message.author.id}`})
             .setTimestamp();
         return logsChannel.send({embeds: [response]});

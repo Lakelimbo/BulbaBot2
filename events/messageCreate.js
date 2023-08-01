@@ -98,7 +98,7 @@ module.exports = {
                                 if (!banned && !kicked)
                                 await message.author.send(`Your message in the server ${message.guild.name}, in the channel ${message.channel.name}, was flagged by our system as being inappropriate.` +
                                 ` The message is as follows:\n${message.content}\n` +
-                                `As a result, a warning has been logged against your account. Please take the time to review the server rules to prevent further action being taken against your account.\n` +
+                                `Please take the time to review the server rules to prevent further action being taken against your account.\n` +
                                 `If you believe this was done in error, please contact the moderators for a manual review. Please be aware that harassment directed toward` +
                                     ` the moderation team may result in referral to Discord staff.\nPlease do not reply directly to this message; you will not receive a response.`);
                             }).catch(err => {

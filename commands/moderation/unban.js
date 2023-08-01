@@ -25,9 +25,9 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('unban')
         .setDescription('Remove a ban from a user, allowing them to rejoin.')
-        .addUserOption(user =>
+        .addStringOption(user =>
             user.setName('user')
-                .setDescription('The banned user.')
+                .setDescription(`The banned user's ID.`)
                 .setRequired(true))
         .addStringOption(reason =>
             reason.setName('reason')
@@ -35,7 +35,10 @@ module.exports = {
                 .setRequired(true)),
 
     async execute(interaction) {
-        const user = interaction.options.getUser("user");
+        const userID = interaction.options.getString("user");
+        const user = await interaction.client.users.fetch(userID);
+        if (!user)
+            return interaction.reply(`No user found with ID ${userID}.`);
         const reason = interaction.options.getString("reason");
         const modRole = await interaction.guild.roles.fetch(modID);
         if (!interaction.member.roles.cache.has(modID) && !interaction.user.id !== adminID && interaction.member.roles.highest.position < modRole.position) {
