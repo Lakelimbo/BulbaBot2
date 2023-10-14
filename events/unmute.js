@@ -21,7 +21,7 @@ module.exports = {
                     console.log(err);
                 });
                 if (!member)
-                    return;
+                    continue;
                 const timeToUnmute = new Date(mute.getDataValue("unmutedTime")).getTime();
                 const now = new Date().getTime();
                 const duration = timeToUnmute - now;
