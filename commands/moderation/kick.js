@@ -90,7 +90,7 @@ module.exports = {
                         .addFields([{name: "Reason", value: reason}])
                         .setTimestamp();
                     channel.send({embeds: [response]});
-                    return interaction.reply("Kick successful.");
+                    return interaction.reply({embeds: [response]});
                 })
                     .catch(async err => {
                         console.log(err);
@@ -132,7 +132,7 @@ module.exports = {
                         .addFields([{name: "Reason", value: reason}])
                         .setTimestamp();
                     channel.send({embeds: [response]});
-                    return interaction.reply("Kick successful.");
+                    return interaction.reply({embeds: [response]});
                 })
                     .catch(async err => {
                         console.log(err);

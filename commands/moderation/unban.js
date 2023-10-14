@@ -92,7 +92,7 @@ module.exports = {
                     .addFields([{name: "Reason", value: reason}])
                     .setTimestamp();
                 channel.send({embeds: [response]});
-                return interaction.reply("Unban successful.");
+                return interaction.reply({embeds: [response]});
             })
             .catch(async err => {
                 // Unban failed

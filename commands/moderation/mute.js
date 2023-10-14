@@ -53,14 +53,13 @@ module.exports = {
             return interaction.reply("The bot may not be used to perform moderation actions against other moderators or higher. This incident will be logged.");
         }
         if (member.roles.cache.has(muteID))
-            return interaction.reply({content: "This user is already muted."});
+            return interaction.reply({content: `This user is already muted. (User: ${member.user.username})`});
         // Parse user input
         const userDuration = interaction.options.getString("duration");
         let duration = this.getDuration(userDuration);
         if (!duration)
             return interaction.reply({
                 content: "Your format for the duration is not correct. You can specify days (d), hours (h), or minutes(m).",
-                ephemeral: true
             });
         const interval = duration[1];
         duration = duration[0];
@@ -123,7 +122,7 @@ module.exports = {
                     .setDescription(`User ${user.username} has been muted for ${userDuration}.`)
                     .setTimestamp();
                 logsChannel.send({embeds: [response]});
-                return interaction.reply({content: "Mute successful."});
+                return interaction.reply({embeds: [response]});
             })
             .catch(err => {
                 console.log(err);
@@ -142,7 +141,12 @@ module.exports = {
                         .setTimestamp();
                     logsChannel.send({embeds: [response]});
                 });
-                return interaction.reply({content: "User successfully muted, but there was a problem logging to the database. Please inform the bot's administrator."})
+                const response = new EmbedBuilder()
+                    .setColor(messageColors.memMute)
+                    .setTitle("User Muted")
+                    .setDescription(`User ${user.username} has been muted for ${userDuration}.`)
+                    .setTimestamp();
+                return interaction.reply({content: "User successfully muted, but there was a problem logging to the database. Please inform the bot's administrator.", embeds: [response]})
             });
     },
     /**

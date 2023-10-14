@@ -51,11 +51,17 @@ module.exports = {
                         .setDescription(`User ${user.username} was manually unmuted by ${interaction.user.username}.`)
                         .setTimestamp();
                     logsChannel.send({embeds: [response]});
-                    return interaction.reply("Unmute successful.");
+                    return interaction.reply({embeds: [response]});
                 })
                 .catch(err => {
                     console.log(err);
-                    interaction.channel.send(`The "muted" role has been removed, but there was a problem removing the mute from the database. Please inform the bot's administrator.`);
+                    const response = new EmbedBuilder()
+                        .setColor(messageColors.memUnmute)
+                        .setTitle("User unmuted")
+                        .setDescription(`User ${user.username} was manually unmuted by ${interaction.user.username}.`)
+                        .setTimestamp();
+                    interaction.channel.send({content: `The "muted" role has been removed, but there was a problem removing the mute from the database.`
+                     + ` Please inform the bot's administrator.`, embeds: [response]});
                 })
             user.send({content: `You have been manually unmuted in ${interaction.guild.name} by a moderator.`})
                 .catch(err => {
