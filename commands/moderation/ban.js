@@ -53,7 +53,7 @@ module.exports = {
             if (!interaction.member.roles.cache.has(modID) && !interaction.user.id !== adminID && interaction.member.roles.highest.position < modRole.position) {
                 interaction.client.emit("unauthorized", interaction.client, interaction.user, {
                     command: "ban",
-                    details: "User ${interaction.user.username} attempted to ban ${member.username}, giving the reason \"${reason}"
+                    details: `User ${interaction.user.username} attempted to ban ${member.username}, giving the reason "${reason}"`
                 });
                 return interaction.reply("You are not authorized to perform this command. Repeated attempts to perform unauthorized actions may result in a ban.");
             }
