@@ -39,7 +39,6 @@ module.exports = {
                 inline: true
             });
         }
-        console.log(fields);
         const response = new EmbedBuilder()
             .setColor(messageColors.whois)
             .setTitle("Active Mutes")
