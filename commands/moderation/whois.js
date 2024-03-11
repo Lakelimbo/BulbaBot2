@@ -11,23 +11,10 @@ module.exports = {
         .setDescription('Displays information about a user account.')
         .addUserOption(user =>
             user.setName('user')
-                .setDescription('User to inspect.'))
-        .addStringOption(userID =>
-            userID.setName("userid")
-                .setDescription("User ID (if user cannot be found).")),
+                .setDescription('User to inspect.')
+                .setRequired(true)),
     async execute(interaction) {
         let user = interaction.options.getUser("user");
-        if (!user) {
-            const userID = interaction.options.getString("userid");
-            if (!userID)
-                return interaction.reply("You must supply either a user or their ID.");
-            user = await interaction.client.users.fetch(userID).catch(err => {
-                console.log(err);
-                return interaction.reply("User not found.");
-            });
-            if (!user)
-                return interaction.reply(`No user found with ID ${userID}.`);
-        }
         const modRole = await interaction.guild.roles.fetch(modID);
         if (interaction.member.roles.highest.position < modRole.position) {
             interaction.client.emit('unauthorized', interaction.client, interaction.user, {
