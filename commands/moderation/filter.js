@@ -1,14 +1,8 @@
 /*
  * Filter system for the bot
  */
-const {SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Embed} = require('discord.js');
-const {dbhost, database, dbuser, dbpass, modID, adminID, messageColors, logChannel} = require('../../config.json');
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize(database, dbuser, dbpass, {
-    host: dbhost,
-    dialect: 'mysql',
-    logging: false
-});
+const {SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js');
+const {modID, adminID, messageColors, logChannel} = require('../../config.json');
 const Blacklist = require('../../includes/sqlBlacklist.js');
 
 module.exports = {
@@ -139,16 +133,19 @@ module.exports = {
                     const flags = filter.getDataValue("flags");
                     const options = filter.getDataValue("options");
                     const author = filter.getDataValue("creator");
-                    data.push( "• Filter ID#" + id + "\n"
-                        + "  \"" + term + "\"\n"
-                        + "  Flags: " + flags + "\n"
-                        + "  Options: " + options + "\n"
-                        + "  Added by: " + author + "\n");
+                    data.push({
+                        name: `• Filter ID#${id}`,
+                        value: `"${term}"\n`
+                            + `Flags: ${flags}\n`
+                            + `Options: ${options}\n`
+                            + `Added by: ${author}`,
+                        inline: true
+                    });
                 });
                 const embed = new EmbedBuilder()
                     .setColor(messageColors.filter)
                     .setTitle("Blacklisted terms")
-                    .setDescription(data.join('\n'))
+                    .addFields(data)
                     .setTimestamp();
                 return interaction.reply({embeds: [embed]})
 
