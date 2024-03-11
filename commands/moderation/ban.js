@@ -32,20 +32,10 @@ module.exports = {
                 .setRequired(true))
         .addUserOption(user =>
             user.setName('user')
-                .setDescription('The offending user (if they are present in the server)'))
-        .addStringOption(userID =>
-            userID.setName('userid')
-                .setDescription("If a user is not present in server, you will need to enter their ID here")),
-
-
+                .setDescription('The offending user or their ID')),
     async execute(interaction) {
         const reason = interaction.options.getString("reason");
         let user = interaction.options.getUser("user");
-        console.log(user);
-        if (!user)
-            user = interaction.options.getString("userid");
-        if (!user)
-            return interaction.reply("You must provide either a user or their ID.");
         const member = await interaction.client.users.fetch(user);
         const isInServer = await interaction.guild.members.resolve(user);
         if (isInServer){
