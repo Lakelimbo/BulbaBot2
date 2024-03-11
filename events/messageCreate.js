@@ -3,7 +3,7 @@
  * It is used to check message contents, as well as enforce filters.
  */
 const {Events, EmbedBuilder} = require('discord.js');
-const {guildID, logChannel, messageColors} = require('../config.json');
+const {guildID, logChannel, messageColors, noInvites, modID} = require('../config.json');
 const Blacklist = require("../includes/sqlBlacklist.js");
 const ModLogs = require("../includes/sqlModLogs.js");
 const Sequelize = require('sequelize');
@@ -14,6 +14,51 @@ module.exports = {
     async execute(message) {
         if (message.guild.id !== guildID || !message.member)
             return;
+
+        //Disable invites
+        const logsChannel = message.guild.channels.resolve(logChannel)
+        const modRole = await message.guild.roles.fetch(modID);
+        // Mods and up are exempt from this restriction
+        const member = await message.guild.members.fetch(message.author);
+        if (noInvites && message.content.toLowerCase().includes("discord.gg") && member.roles.highest.position < modRole.position) {
+            try {
+                await message.delete();
+            } catch (err) {
+                console.log(err);
+                const response = new EmbedBuilder()
+                    .setColor(messageColors.error)
+                    .setTitle("Failed to delete Discord link")
+                    .setDescription(`I was unable to remove message ${message.url}, in which I detected a Discord Link.`)
+                    .addFields([
+                        {
+                            name: "Message",
+                            value: message.content
+                        },
+                        {
+                            name: "User",
+                            value: message.author
+                        }
+                    ])
+                    .setTimestamp();
+                return logsChannel.send({embeds: [response]});
+            }
+            const response = new EmbedBuilder()
+                .setColor(messageColors.messageDelete)
+                .setTitle("Discord link removed")
+                .setDescription("Message with Discord invite link removed.")
+                .addFields([
+                    {
+                        name: "Message",
+                        value: message.content.toString()
+                    },
+                    {
+                        name: "User",
+                        value: message.author.toString()
+                    }])
+                .setTimestamp();
+            return logsChannel.send({embeds: [response]});
+
+        }
         return this.filterMessage(message);
     },
 

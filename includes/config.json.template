@@ -13,6 +13,8 @@
   "reportChannel": "", # When your bot receives a report, it will place it in this channel ID.
   "modID": "", # The role ID of your moderator group. This group will be allowed to use the moderation tools.
   "muteID": "", # This is the role ID of your "muted" group.
+  "noInvites": "false", # The bot will automatically remove any message with https://discord.gg in it if this is set to "true."
+  "mentionLimit": "false", # Set a limit on how many people may be mentioned in a single message. Mods bypass this requirement. Leave "false" to disable
   "ignores": { # A list of commands for ?ignore, along with what role ID should be assigned. Requires you to manually configure the role permissions.
     "command": "roleID" # `/ignore command` will add roleID to the user.
   },
