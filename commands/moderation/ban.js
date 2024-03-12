@@ -32,7 +32,8 @@ module.exports = {
                 .setRequired(true))
         .addUserOption(user =>
             user.setName('user')
-                .setDescription('The offending user or their ID')),
+                .setDescription('The offending user or their ID')
+                .setRequired(true)),
     async execute(interaction) {
         const reason = interaction.options.getString("reason");
         let user = interaction.options.getUser("user");
