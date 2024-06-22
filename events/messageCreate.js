@@ -15,6 +15,14 @@ module.exports = {
         if (message.guild.id !== guildID || !message.member)
             return;
 
+        // Link to wiki when using [[...]]
+        const linkRegex = /\[\[(.*?)\]\]/;
+        if (linkRegex.test(message.content.toLowerCase())) {
+            const match = message.content.match(linkRegex);
+            const searchText = match[1];
+            return message.reply(`https://bulbapedia.bulbagarden.net/wiki/${encodeURIComponent(searchText)}`);
+        }
+
         //Disable invites
         const logsChannel = message.guild.channels.resolve(logChannel)
         const modRole = await message.guild.roles.fetch(modID);
@@ -60,6 +68,7 @@ module.exports = {
 
         }
         return this.filterMessage(message);
+        
     },
 
     async filterMessage(message) {
