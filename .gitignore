@@ -1,4 +1,15 @@
+# folders
 /node_modules/
 /test/
 config.json
 /.idea/
+
+# lockfiles
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+
+# others
+.env
+.env.**
